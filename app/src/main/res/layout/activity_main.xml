@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/colorBackground">
+
+    <!-- 顶部栏：搜索 + 设置 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        android:background="@color/colorSurface"
+        android:elevation="2dp">
+
+        <EditText
+            android:id="@+id/searchEditText"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:hint="@string/search_hint"
+            android:textColorHint="@color/colorTextHint"
+            android:textColor="@color/colorTextPrimary"
+            android:padding="8dp"
+            android:background="@color/colorSurfaceLight"
+            android:maxLines="1" />
+
+        <Button
+            android:id="@+id/searchButton"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginStart="8dp"
+            android:text="@string/search"
+            android:background="@color/colorPrimary"
+            android:textColor="@android:color/white" />
+
+        <ImageButton
+            android:id="@+id/settingsButton"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="8dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@android:drawable/ic_menu_preferences"
+            android:contentDescription="@string/settings" />
+    </LinearLayout>
+
+    <!-- Tab Buttons -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="4dp"
+        android:background="@color/colorSurface"
+        android:elevation="2dp">
+
+        <Button
+            android:id="@+id/libraryButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/library_title"
+            android:background="?attr/selectableItemBackground"
+            android:textColor="@color/colorPrimary" />
+
+        <Button
+            android:id="@+id/queueButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/queue_title"
+            android:background="?attr/selectableItemBackground"
+            android:textColor="@color/colorTextSecondary" />
+
+        <Button
+            android:id="@+id/remoteButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/remote_control_title"
+            android:background="?attr/selectableItemBackground"
+            android:textColor="@color/colorTextSecondary" />
+
+    </LinearLayout>
+
+    <!-- Storage Type Indicator -->
+    <TextView
+        android:id="@+id/storageTypeTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:text="@string/storage_type"
+        android:textColor="@color/colorTextSecondary"
+        android:textSize="12sp"
+        android:background="@color/colorSurface"
+        android:elevation="1dp"
+        android:gravity="center" />
+
+    <!-- Content Area -->
+    <FrameLayout
+        android:id="@+id/contentFrame"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <!-- Song List -->
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/songRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical"
+            android:padding="4dp" />
+
+        <!-- Play Queue List -->
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/queueRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical"
+            android:visibility="gone"
+            android:padding="4dp" />
+
+        <!-- Remote Control View -->
+        <ScrollView
+            android:id="@+id/remoteScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            android:padding="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center_horizontal">
+
+                <!-- QR Code -->
+                <ImageView
+                    android:id="@+id/qrCodeImageView"
+                    android:layout_width="256dp"
+                    android:layout_height="256dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@color/colorSurface"
+                    android:padding="8dp"
+                    android:elevation="4dp" />
+
+                <TextView
+                    android:id="@+id/serverUrlTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/qr_instructions"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorTextSecondary"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </FrameLayout>
+
+    <!-- Now Playing Bar -->
+    <LinearLayout
+        android:id="@+id/nowPlayingBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/colorSurface"
+        android:padding="12dp"
+        android:elevation="4dp">
+
+        <!-- Song Info -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:id="@+id/albumCoverImageView"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:scaleType="centerCrop"
+                android:background="@color/colorSurfaceLight" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="12dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/songTitleTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/not_playing"
+                    android:textColor="@color/colorTextPrimary"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:maxLines="1"
+                    android:ellipsize="end" />
+
+                <TextView
+                    android:id="@+id/songArtistTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/empty_queue"
+                    android:textColor="@color/colorTextSecondary"
+                    android:textSize="12sp"
+                    android:maxLines="1"
+                    android:ellipsize="end" />
+
+            </LinearLayout>
+
+            <!-- Playback Controls -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/previousButton"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginEnd="4dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:src="@android:drawable/ic_media_previous"
+                    android:contentDescription="@string/previous"
+                    android:tint="@color/colorPrimary" />
+
+                <ImageButton
+                    android:id="@+id/playPauseButton"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginEnd="4dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:src="@android:drawable/ic_media_play"
+                    android:contentDescription="@string/playing_now"
+                    android:tint="@color/colorPrimary" />
+
+                <ImageButton
+                    android:id="@+id/nextButton"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:src="@android:drawable/ic_media_next"
+                    android:contentDescription="@string/next"
+                    android:tint="@color/colorPrimary" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- Lyrics and Visualizer -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal"
+            android:background="@color/colorSurfaceLight"
+            android:padding="8dp">
+
+            <com.ktv.simple.view.LyricsView
+                android:id="@+id/lyricsView"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <com.ktv.simple.view.VolumeVisualizerView
+                android:id="@+id/visualizerView"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

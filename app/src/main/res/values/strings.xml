@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 应用名称 -->
+    <string name="app_name">极简KTV</string>
+
+    <!-- 设置 -->
+    <string name="settings">设置</string>
+    <string name="settings_title">存储设置</string>
+    <string name="storage_type">存储类型</string>
+    <string name="local_storage">本地存储</string>
+    <string name="webdav_storage">WebDAV网络存储</string>
+    <string name="ftp_storage">FTP网络存储</string>
+    <string name="smb_storage">SMB网络存储</string>
+    <string name="local_path">本地文件夹路径</string>
+    <string name="local_path_hint">/storage/emulated/0/Music</string>
+    <string name="webdav_url">WebDAV 服务器地址</string>
+    <string name="ftp_server">FTP 服务器地址</string>
+    <string name="ftp_port">端口</string>
+    <string name="smb_server">SMB 服务器地址</string>
+    <string name="smb_share">共享名称</string>
+    <string name="username">用户名</string>
+    <string name="username_hint">请输入用户名</string>
+    <string name="password">密码</string>
+    <string name="password_hint">请输入密码</string>
+    <string name="save">保存</string>
+    <string name="cancel">取消</string>
+
+    <!-- 主界面 -->
+    <string name="search_hint">搜索歌曲…</string>
+    <string name="library_title">歌曲库</string>
+    <string name="queue_title">播放队列</string>
+    <string name="remote_control_title">远程控制</string>
+    <string name="current_storage">当前存储：本地存储</string>
+
+    <!-- 播放控制 -->
+    <string name="previous">上一首</string>
+    <string name="next">下一首</string>
+    <string name="playing_now">正在播放</string>
+    <string name="empty_queue">播放队列为空</string>
+    <string name="no_lyrics">暂无歌词</string>
+    <string name="add_to_queue">添加到队列</string>
+    <string name="move_to_top">移到顶部</string>
+    <string name="remove">移除</string>
+
+    <!-- 远程控制 -->
+    <string name="qr_instructions">扫描二维码连接手机或电脑进行远程控制</string>
+    <string name="server_started">服务器已启动</string>
+    <string name="server_url">服务器地址：%s</string>
+    <string name="not_playing">未播放</string>
+    <string name="loading">加载中…</string>
+    <string name="search">搜索</string>
+    <string name="clear_queue">清空队列</string>
+    <string name="play_all">播放全部</string>
+
+    <!-- HTTP 控制服务 -->
+    <string name="control_service_title">远程控制服务</string>
+    <string name="service_running">服务运行中</string>
+    <string name="service_stopped">服务已停止</string>
+
+    <!-- 缓存管理 -->
+    <string name="cache_management">缓存管理</string>
+    <string name="current_cache_size">当前缓存大小</string>
+    <string name="audio_cache">音频缓存</string>
+    <string name="image_cache">图片缓存</string>
+    <string name="cache_settings">缓存设置</string>
+    <string name="max_cache_size">最大缓存大小</string>
+    <string name="cache_auto_cleanup">自动清理（超过多少天未使用）</string>
+    <string name="cache_actions">缓存操作</string>
+    <string name="clear_audio_cache">清除音频缓存</string>
+    <string name="clear_image_cache">清除图片缓存</string>
+    <string name="clear_all_cache">清除所有缓存</string>
+    <string name="cache_info">提示：\n• 音频缓存用于存储远程下载的歌曲\n• 图片缓存用于存储专辑封面\n• 应用卸载时会自动清除所有缓存\n• 达到最大缓存限制时会自动清理最久未使用的缓存</string>
+    <string name="confirm_clear_audio_cache">确认清除音频缓存</string>
+    <string name="clear_audio_cache_warning">这将删除所有已缓存的音频文件，下次播放时需要重新下载。确定要继续吗？</string>
+    <string name="confirm_clear_image_cache">确认清除图片缓存</string>
+    <string name="clear_image_cache_warning">这将删除所有已缓存的专辑封面，下次加载时会重新生成。确定要继续吗？</string>
+    <string name="confirm_clear_all_cache">确认清除所有缓存</string>
+    <string name="clear_all_cache_warning">这将删除所有缓存文件（音频和图片），建议在存储空间不足时使用。确定要继续吗？</string>
+    <string name="audio_cache_cleared">音频缓存已清除</string>
+    <string name="image_cache_cleared">图片缓存已清除</string>
+    <string name="all_cache_cleared">所有缓存已清除</string>
+
+    <!-- 错误信息 -->
+    <string name="error_load_songs">加载歌曲失败</string>
+    <string name="error_connect_storage">连接存储失败</string>
+    <string name="permission_required">需要存储权限</string>
+    <string name="error_network">网络错误</string>
+</resources>

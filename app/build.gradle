@@ -1,0 +1,97 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 28
+    buildToolsVersion "28.0.3"
+
+    defaultConfig {
+        applicationId "com.ktv.simple"
+        minSdkVersion 19
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0.0"
+
+        ndk {
+            abiFilters 'armeabi-v7a'
+        }
+
+        multiDexEnabled true
+    }
+
+    buildTypes {
+        debug {
+            debuggable true
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+
+    lintOptions {
+        abortOnError false
+        checkReleaseBuilds false
+    }
+
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/ASL2.0'
+        exclude 'META-INF/beans.xml'
+    }
+
+    dexOptions {
+        jumboMode true
+        preDexLibraries = false
+        javaMaxHeapSize "4g"
+    }
+}
+
+dependencies {
+    // Support Library (Android 4.4 compatible)
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'com.android.support:design:28.0.0'
+    implementation 'com.android.support:recyclerview-v7:28.0.0'
+    implementation 'com.android.support:cardview-v7:28.0.0'
+
+    // Network
+    implementation 'com.squareup.okhttp3:okhttp:3.12.13'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.12.13'
+
+    // SMB support - 使用 jcifs (兼容 Android 4.4)
+    implementation 'jcifs:jcifs:1.3.17'
+
+    // HTTP Server
+    implementation 'org.nanohttpd:nanohttpd:2.3.1'
+    implementation 'org.nanohttpd:nanohttpd-webserver:2.3.1'
+
+    // QR Code
+    implementation 'com.google.zxing:core:3.4.0'
+    implementation 'com.journeyapps:zxing-android-embedded:3.6.0'
+
+    // FTP support
+    implementation 'commons-net:commons-net:3.6'
+
+    // Audio metadata parsing - 移除不可用的依赖，使用替代方案
+    // implementation 'org.jaudiotagger:jaudiotagger:2.2.3'  // 不可用
+
+    // JSON parsing
+    implementation 'com.google.code.gson:gson:2.8.6'
+
+    // Image loading
+    implementation 'com.github.bumptech.glide:glide:4.9.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
+
+    // Multidex
+    implementation 'com.android.support:multidex:1.0.3'
+}

@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>极简KTV - 远程控制</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%);
+            color: white;
+            padding: 24px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 14px;
+        }
+
+        .search-section {
+            padding: 20px;
+            background: #f5f5f5;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .search-box {
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: flex;
+            -webkit-box-orient: horizontal;
+            -webkit-box-direction: normal;
+            -webkit-flex-direction: row;
+            flex-direction: row;
+            gap: 10px;
+        }
+
+        .search-box input {
+            -webkit-box-flex: 1;
+            -webkit-flex: 1;
+            flex: 1;
+            padding: 12px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            outline: none;
+            -webkit-transition: border-color 0.3s;
+            transition: border-color 0.3s;
+        }
+
+        .search-box input:focus {
+            border-color: #2196F3;
+        }
+
+        .search-box button {
+            padding: 12px 24px;
+            background: #2196F3;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            -webkit-transition: background 0.3s;
+            transition: background 0.3s;
+        }
+
+        .search-box button:hover {
+            background: #1976D2;
+        }
+
+        .section {
+            padding: 20px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .section h2 {
+            font-size: 20px;
+            margin-bottom: 16px;
+            color: #333;
+        }
+
+        .now-playing {
+            background: #e3f2fd;
+            border-radius: 8px;
+            padding: 16px;
+        }
+
+        .now-playing .song-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .now-playing .song-artist {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 12px;
+        }
+
+        .controls {
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: flex;
+            -webkit-box-pack: center;
+            -webkit-justify-content: center;
+            justify-content: center;
+            gap: 12px;
+            -webkit-flex-wrap: wrap;
+            flex-wrap: wrap;
+        }
+
+        .controls button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            -webkit-transition: all 0.3s;
+            transition: all 0.3s;
+        }
+
+        .controls button.primary {
+            background: #2196F3;
+            color: white;
+        }
+
+        .controls button.primary:hover {
+            background: #1976D2;
+        }
+
+        .controls button.secondary {
+            background: #757575;
+            color: white;
+        }
+
+        .controls button.secondary:hover {
+            background: #616161;
+        }
+
+        .queue-list {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .queue-item {
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: flex;
+            -webkit-box-align: center;
+            -webkit-align-items: center;
+            align-items: center;
+            padding: 12px;
+            border-bottom: 1px solid #e0e0e0;
+            -webkit-transition: background 0.2s;
+            transition: background 0.2s;
+        }
+
+        .queue-item:hover {
+            background: #f5f5f5;
+        }
+
+        .queue-item .position {
+            font-weight: bold;
+            margin-right: 12px;
+            min-width: 30px;
+        }
+
+        .queue-item .info {
+            -webkit-box-flex: 1;
+            -webkit-flex: 1;
+            flex: 1;
+        }
+
+        .queue-item .info .title {
+            font-weight: 500;
+        }
+
+        .queue-item .info .artist {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .queue-item .actions {
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: flex;
+            gap: 8px;
+        }
+
+        .queue-item .actions button {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        .queue-item .actions button.play-btn {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .queue-item .actions button.remove-btn {
+            background: #F44336;
+            color: white;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 40px;
+            color: #999;
+        }
+
+        .search-results {
+            margin-top: 16px;
+        }
+
+        .search-results h3 {
+            margin-bottom: 12px;
+            font-size: 16px;
+        }
+
+        @media (max-width: 600px) {
+            .controls button {
+                padding: 10px 16px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎤 极简KTV</h1>
+            <p>远程控制界面</p>
+        </div>
+
+        <div class="search-section">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="搜索歌曲（歌名或歌手）...">
+                <button onclick="searchSongs()">搜索</button>
+            </div>
+            <div id="searchResults" class="search-results"></div>
+        </div>
+
+        <div class="section">
+            <h2>🎵 正在播放</h2>
+            <div id="nowPlaying" class="now-playing">
+                <div class="loading">加载中...</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>🎮 播放控制</h2>
+            <div class="controls">
+                <button class="secondary" onclick="previous()">⏮️ 上一首</button>
+                <button class="primary" onclick="playPause()" id="playPauseBtn">▶️ 播放</button>
+                <button class="secondary" onclick="next()">⏭️ 下一首</button>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>📋 播放队列 <span id="queueSize" style="font-size: 14px; color: #666; margin-left: 10px;"></span></h2>
+            <div id="queueList" class="queue-list">
+                <div class="loading">加载中...</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = '/api';
+
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            loadStatus();
+            loadQueue();
+            loadLibraryInfo();
+
+            // 每5秒刷新状态
+            setInterval(loadStatus, 5000);
+
+            // Debug: Test search on load
+            console.log('Remote control loaded');
+            console.log('API Base:', API_BASE);
+        });
+
+        // 加载歌曲库信息（调试用）
+        function loadLibraryInfo() {
+            ajaxGet(API_BASE + '/library/info', function(data, error) {
+                console.log('Library info:', data);
+                if (data && data.success) {
+                    console.log('Song library size:', data.librarySize);
+                    if (data.librarySize === 0) {
+                        var searchSection = document.querySelector('.search-section');
+                        if (searchSection) {
+                            searchSection.innerHTML = '<div style="padding: 20px; text-align: center; color: #666;">' +
+                                '<p>歌曲库为空</p>' +
+                                '<p style="font-size: 12px;">请在手机上先加载歌曲</p>' +
+                                '</div>';
+                        }
+                    }
+                }
+            });
+        }
+
+        // 封装 AJAX 请求（兼容旧浏览器）
+        function ajaxRequest(url, method, data, callback) {
+            var xhr = new XMLHttpRequest();
+
+            xhr.open(method, url, true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        var response = JSON.parse(xhr.responseText);
+                        callback(response, null);
+                    } else {
+                        callback(null, 'Error: ' + xhr.status);
+                    }
+                }
+            };
+
+            xhr.onerror = function() {
+                callback(null, 'Network error');
+            };
+
+            if (data) {
+                xhr.send(JSON.stringify(data));
+            } else {
+                xhr.send();
+            }
+        }
+
+        // 封装 GET 请求
+        function ajaxGet(url, callback) {
+            ajaxRequest(url, 'GET', null, callback);
+        }
+
+        // 封装 POST 请求
+        function ajaxPost(url, data, callback) {
+            ajaxRequest(url, 'POST', data, callback);
+        }
+
+        // 加载播放状态
+        function loadStatus() {
+            ajaxGet(API_BASE + '/status', function(data, error) {
+                var nowPlayingDiv = document.getElementById('nowPlaying');
+
+                if (error) {
+                    nowPlayingDiv.innerHTML = '<div class="empty">加载失败</div>';
+                    return;
+                }
+
+                if (data && data.currentSong) {
+                    nowPlayingDiv.innerHTML = '<div class="song-title">' + data.currentSong.title + '</div>' +
+                        '<div class="song-artist">' + data.currentSong.artist + '</div>' +
+                        '<div style="color: #666; font-size: 12px;">队列中有 ' + data.queueSize + ' 首歌曲</div>';
+                } else {
+                    nowPlayingDiv.innerHTML = '<div class="empty">未播放</div>';
+                }
+            });
+        }
+
+        // 加载队列
+        function loadQueue() {
+            ajaxGet(API_BASE + '/queue', function(data, error) {
+                var queueListDiv = document.getElementById('queueList');
+                var queueSizeSpan = document.getElementById('queueSize');
+
+                if (error) {
+                    queueListDiv.innerHTML = '<div class="empty">加载失败</div>';
+                    if (queueSizeSpan) {
+                        queueSizeSpan.textContent = '';
+                    }
+                    return;
+                }
+
+                // Update queue size
+                if (queueSizeSpan && data && data.queue) {
+                    queueSizeSpan.textContent = '(' + data.queue.length + ' 首歌曲)';
+                }
+
+                if (!data || !data.queue || data.queue.length === 0) {
+                    queueListDiv.innerHTML = '<div class="empty">队列为空</div>';
+                    return;
+                }
+
+                var html = '';
+                for (var i = 0; i < data.queue.length; i++) {
+                    var item = data.queue[i];
+                    html += '<div class="queue-item">' +
+                        '<span class="position">' + (item.position + 1) + '</span>' +
+                        '<div class="info">' +
+                        '<div class="title">' + (item.title || '未知歌曲') + '</div>' +
+                        '<div class="artist">' + (item.artist || '未知歌手') + '</div>' +
+                        '</div>' +
+                        '<div class="actions">' +
+                        '<button class="play-btn" onclick="jumpTo(' + i + ')">播放</button>' +
+                        '<button class="remove-btn" onclick="removeFromQueue(' + item.id + ')">删除</button>' +
+                        '</div>' +
+                        '</div>';
+                }
+
+                queueListDiv.innerHTML = html;
+            });
+        }
+
+        // 搜索歌曲
+        function searchSongs() {
+            var keyword = document.getElementById('searchInput').value.trim();
+
+            if (!keyword) {
+                alert('请输入搜索关键词');
+                return;
+            }
+
+            var searchResultsDiv = document.getElementById('searchResults');
+            searchResultsDiv.innerHTML = '<h3>搜索中...</h3>';
+
+            // Search in song library instead of queue
+            var searchUrl = API_BASE + '/library/search?keyword=' + encodeURIComponent(keyword);
+            console.log('Searching: ' + searchUrl);
+
+            ajaxGet(searchUrl, function(data, error) {
+                console.log('Search result:', data);
+
+                if (error) {
+                    alert('搜索失败，请稍后重试');
+                    searchResultsDiv.innerHTML = '';
+                    return;
+                }
+
+                if (!data.success || !data.results || data.results.length === 0) {
+                    searchResultsDiv.innerHTML = '<h3>搜索结果</h3><div class="empty">未找到匹配的歌曲</div>';
+                    return;
+                }
+
+                var html = '<h3>搜索结果 (' + data.count + ')</h3>';
+                for (var i = 0; i < data.results.length; i++) {
+                    var item = data.results[i];
+                    html += '<div class="queue-item">' +
+                        '<div class="info">' +
+                        '<div class="title">' + item.title + '</div>' +
+                        '<div class="artist">' + item.artist + '</div>' +
+                        '</div>' +
+                        '<div class="actions">' +
+                        '<button class="play-btn" onclick="addToQueueBySongId(' + item.songId + ')">添加到队列</button>' +
+                        '</div>' +
+                        '</div>';
+                }
+
+                searchResultsDiv.innerHTML = html;
+            });
+        }
+
+        // Add song to queue by song ID
+        function addToQueueBySongId(songId) {
+            ajaxPost(API_BASE + '/queue/add', { songId: songId }, function(data, error) {
+                if (error || !data.success) {
+                    alert('添加失败：' + (data && data.error ? data.error : '未知错误'));
+                    return;
+                }
+                alert('已添加到队列');
+                loadQueue();
+            });
+        }
+
+        // 播放/暂停
+        function playPause() {
+            ajaxGet(API_BASE + '/status', function(statusData, statusError) {
+                if (statusError) {
+                    alert('操作失败，请稍后重试');
+                    return;
+                }
+
+                if (statusData.isPlaying) {
+                    // 如果正在播放，则暂停
+                    ajaxPost(API_BASE + '/control/pause', {}, function(data, error) {
+                        document.getElementById('playPauseBtn').textContent = '▶️ 播放';
+                        loadStatus();
+                    });
+                } else {
+                    // 如果暂停或未播放，则播放
+                    ajaxPost(API_BASE + '/control/play', {}, function(data, error) {
+                        document.getElementById('playPauseBtn').textContent = '⏸️ 暂停';
+                        loadStatus();
+                    });
+                }
+            });
+        }
+
+        // 上一首
+        function previous() {
+            ajaxPost(API_BASE + '/control/previous', {}, function(data, error) {
+                loadStatus();
+            });
+        }
+
+        // 下一首
+        function next() {
+            ajaxPost(API_BASE + '/control/next', {}, function(data, error) {
+                loadStatus();
+            });
+        }
+
+        // 跳转到指定歌曲
+        function jumpTo(index) {
+            ajaxPost(API_BASE + '/control/jump', { index: index }, function(data, error) {
+                if (error) {
+                    alert('操作失败，请稍后重试');
+                    return;
+                }
+
+                loadStatus();
+                loadQueue();
+
+                // 清空搜索结果
+                document.getElementById('searchResults').innerHTML = '';
+            });
+        }
+
+        // 从队列中删除
+        function removeFromQueue(id) {
+            if (!confirm('确定要删除这首歌吗？')) {
+                return;
+            }
+
+            ajaxPost(API_BASE + '/queue/remove', { id: id }, function(data, error) {
+                if (error) {
+                    alert('删除失败，请稍后重试');
+                    return;
+                }
+
+                loadQueue();
+            });
+        }
+
+        // 搜索框回车事件
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.keyCode === 13) {
+                searchSongs();
+            }
+        });
+    </script>
+</body>
+</html>

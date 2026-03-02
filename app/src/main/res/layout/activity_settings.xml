@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- 标题 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/settings_title"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/colorTextPrimary"
+            android:paddingBottom="16dp" />
+
+        <!-- 存储类型选择 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/storage_type"
+            android:textSize="16sp"
+            android:textColor="@color/colorTextPrimary"
+            android:paddingBottom="8dp" />
+
+        <RadioGroup
+            android:id="@+id/storageTypeGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RadioButton
+                android:id="@+id/localRadio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/local_storage"
+                android:textSize="14sp"
+                android:textColor="@color/colorTextPrimary"
+                android:checked="true" />
+
+            <RadioButton
+                android:id="@+id/webDavRadio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/webdav_storage"
+                android:textSize="14sp"
+                android:textColor="@color/colorTextPrimary" />
+
+            <RadioButton
+                android:id="@+id/ftpRadio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ftp_storage"
+                android:textSize="14sp"
+                android:textColor="@color/colorTextPrimary" />
+
+            <RadioButton
+                android:id="@+id/smbRadio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/smb_storage"
+                android:textSize="14sp"
+                android:textColor="@color/colorTextPrimary" />
+        </RadioGroup>
+
+        <!-- 本地存储配置 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="16dp"
+            android:background="@color/colorSurface"
+            android:padding="12dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/local_path"
+                android:textSize="14sp"
+                android:textColor="@color/colorTextPrimary"
+                android:paddingBottom="8dp" />
+
+            <EditText
+                android:id="@+id/localPathEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/local_path_hint"
+                android:textColor="@color/colorTextPrimary"
+                android:textColorHint="@color/colorTextHint"
+                android:background="@color/colorSurfaceLight"
+                android:padding="8dp" />
+        </LinearLayout>
+
+        <!-- WebDAV 配置 -->
+        <LinearLayout
+            android:id="@+id/webDavLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="16dp"
+            android:background="@color/colorSurface"
+            android:padding="12dp"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/webdav_url"
+                android:textSize="14sp"
+                android:textColor="@color/colorTextPrimary"
+                android:paddingBottom="4dp" />
+
+            <EditText
+                android:id="@+id/webDavUrlEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="https://example.com/music"
+                android:textColor="@color/colorTextPrimary"
+                android:textColorHint="@color/colorTextHint"
+                android:background="@color/colorSurfaceLight"
+                android:padding="8dp"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/username"
+                android:textSize="14sp"
+                android:textColor="@color/colorTextPrimary"
+                android:paddingBottom="4dp" />
+
+            <EditText
+                android:id="@+id/webDavUsernameEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/username_hint"
+                android:textColor="@color/colorTextPrimary"
+                android:textColorHint="@color/colorTextHint"
+                android:background="@color/colorSurfaceLight"
+                android:padding="8dp"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/password"
+                android:textSize="14sp"
+                android:textColor="@color/colorTextPrimary"
+                android:paddingBottom="4dp" />
+
+            <EditText
+                android:id="@+id/webDavPasswordEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/password_hint"
+                android:inputType="textPassword"
+                android:textColor="@color/colorTextPrimary"
+                android:textColorHint="@color/colorTextHint"
+                android:background="@color/colorSurfaceLight"
+                android:padding="8dp" />
+        </LinearLayout>
+
+        <!-- FTP 配置 -->
+        <LinearLayout
+            android:id="@+id/ftpLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="16dp"
+            android:background="@color/colorSurface"
+            android:padding="12dp"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/ftp_server"
+                android:textSize="14sp"
+                android:textColor="@color/colorTextPrimary"
+                android:paddingBottom="4dp" />
+
+            <EditText
+                android:id="@+id/ftpServerEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="192.168.1.100"
+                android:textColor="@color/colorTextPrimary"
+                android:textColorHint="@color/colorTextHint"
+                android:background="@color/colorSurfaceLight"
+                android:padding="8dp"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/ftp_port"
+                android:textSize="14sp"
+                android:textColor="@color/colorTextPrimary"
+                android:paddingBottom="4dp" />
+
+            <EditText
+                android:id="@+id/ftpPortEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="21"
+                android:inputType="number"
+                android:text="21"
+                android:textColor="@color/colorTextPrimary"
+                android:textColorHint="@color/colorTextHint"
+                android:background="@color/colorSurfaceLight"
+                android:padding="8dp"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/username"
+                android:textSize="14sp"
+                android:textColor="@color/colorTextPrimary"
+                android:paddingBottom="4dp" />
+
+            <EditText
+                android:id="@+id/ftpUsernameEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/username_hint"
+                android:textColor="@color/colorTextPrimary"
+                android:textColorHint="@color/colorTextHint"
+                android:background="@color/colorSurfaceLight"
+                android:padding="8dp"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/password"
+                android:textSize="14sp"
+                android:textColor="@color/colorTextPrimary"
+                android:paddingBottom="4dp" />
+
+            <EditText
+                android:id="@+id/ftpPasswordEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/password_hint"
+                android:inputType="textPassword"
+                android:textColor="@color/colorTextPrimary"
+                android:textColorHint="@color/colorTextHint"
+                android:background="@color/colorSurfaceLight"
+                android:padding="8dp" />
+        </LinearLayout>
+
+        <!-- SMB 配置 -->
+        <LinearLayout
+            android:id="@+id/smbLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="16dp"
+            android:background="@color/colorSurface"
+            android:padding="12dp"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/smb_server"
+                android:textSize="14sp"
+                android:textColor="@color/colorTextPrimary"
+                android:paddingBottom="4dp" />
+
+            <EditText
+                android:id="@+id/smbServerEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="192.168.1.100"
+                android:textColor="@color/colorTextPrimary"
+                android:textColorHint="@color/colorTextHint"
+                android:background="@color/colorSurfaceLight"
+                android:padding="8dp"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/smb_share"
+                android:textSize="14sp"
+                android:textColor="@color/colorTextPrimary"
+                android:paddingBottom="4dp" />
+
+            <EditText
+                android:id="@+id/smbShareEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="music"
+                android:textColor="@color/colorTextPrimary"
+                android:textColorHint="@color/colorTextHint"
+                android:background="@color/colorSurfaceLight"
+                android:padding="8dp"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/username"
+                android:textSize="14sp"
+                android:textColor="@color/colorTextPrimary"
+                android:paddingBottom="4dp" />
+
+            <EditText
+                android:id="@+id/smbUsernameEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/username_hint"
+                android:textColor="@color/colorTextPrimary"
+                android:textColorHint="@color/colorTextHint"
+                android:background="@color/colorSurfaceLight"
+                android:padding="8dp"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/password"
+                android:textSize="14sp"
+                android:textColor="@color/colorTextPrimary"
+                android:paddingBottom="4dp" />
+
+            <EditText
+                android:id="@+id/smbPasswordEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/password_hint"
+                android:inputType="textPassword"
+                android:textColor="@color/colorTextPrimary"
+                android:textColorHint="@color/colorTextHint"
+                android:background="@color/colorSurfaceLight"
+                android:padding="8dp" />
+        </LinearLayout>
+
+        <!-- 按钮区域 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="24dp">
+
+            <Button
+                android:id="@+id/cacheManagementButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="@string/cache_management"
+                android:background="@color/colorSurfaceLight"
+                android:textColor="@color/colorPrimary" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="end">
+
+                <Button
+                    android:id="@+id/cancelButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:text="@string/cancel"
+                    android:background="@color/colorSurfaceLight"
+                    android:textColor="@color/colorTextPrimary" />
+
+                <Button
+                    android:id="@+id/saveButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/save"
+                    android:background="@color/colorPrimary"
+                    android:textColor="@android:color/white" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>
