@@ -399,7 +399,7 @@ public class OnlineMusicService {
         urlBuilder.append("&page=").append(page);
         urlBuilder.append("&pageSize=").append(pageSize);
 
-        String url = urlBuilder.toString();
+        final String url = urlBuilder.toString();
         Log.i(TAG, "Searching: " + url);
 
         Request request = new Request.Builder()
@@ -547,7 +547,7 @@ public class OnlineMusicService {
             return;
         }
 
-        String url = baseUrl + "/" + apiKey + "/api/music/url";
+        final String url = baseUrl + "/" + apiKey + "/api/music/url";
         Log.i(TAG, "Getting music URL: " + url + " source=" + source + " songId=" + songId);
 
         // 构建请求体
