@@ -581,8 +581,8 @@ public class MainActivity extends AppCompatActivity implements
     public void onSongClick(final Song song) {
         // 点击歌曲：使用搜索结果中的 source 和 songId 获取播放地址
         // 重要：source 和 songId 已经在搜索结果中返回，无需用户选择
-        String source = song.getSource();
-        String songId = song.getSongId();
+        final String source = song.getSource();
+        final String songId = song.getSongId();
         
         if (source == null || source.isEmpty() || songId == null || songId.isEmpty()) {
             Toast.makeText(this, "歌曲信息不完整", Toast.LENGTH_SHORT).show();
@@ -642,8 +642,8 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void onAddToQueueClick(final Song song) {
         // 添加到队列：使用搜索结果中的 source 和 songId
-        String source = song.getSource();
-        String songId = song.getSongId();
+        final String source = song.getSource();
+        final String songId = song.getSongId();
         
         if (source == null || source.isEmpty() || songId == null || songId.isEmpty()) {
             Toast.makeText(this, "歌曲信息不完整", Toast.LENGTH_SHORT).show();
