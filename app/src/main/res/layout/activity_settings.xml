@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:background="@color/colorBackground">
+
+    <!-- 左侧：配置输入 -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- 标题 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="服务器配置"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/colorTextPrimary"
+            android:paddingBottom="8dp" />
+
+        <!-- 说明 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="请输入音乐服务器的管理地址，系统将自动解析并获取可用音源"
+            android:textSize="14sp"
+            android:textColor="@color/colorTextSecondary"
+            android:paddingBottom="16dp" />
+
+        <!-- 管理地址输入 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/colorSurface"
+            android:padding="12dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="服务器地址"
+                android:textSize="14sp"
+                android:textColor="@color/colorTextPrimary"
+                android:paddingBottom="4dp" />
+
+            <EditText
+                android:id="@+id/adminUrlEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="https://域名/API_KEY"
+                android:textColor="@color/colorTextPrimary"
+                android:textColorHint="@color/colorTextHint"
+                android:background="@color/colorSurfaceLight"
+                android:padding="12dp"
+                android:inputType="textUri"
+                android:maxLines="1"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="示例格式：\n• https://music.example.com/abc123\n• https://192.168.1.100:8080/your-key\n• https://music.example.com/abc123/admin"
+                android:textSize="12sp"
+                android:textColor="@color/colorTextHint" />
+        </LinearLayout>
+
+        <!-- 按钮区域 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="16dp"
+            android:gravity="end">
+
+            <Button
+                android:id="@+id/testButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:text="测试连接"
+                android:minWidth="100dp"
+                android:background="@color/colorSurfaceLight"
+                android:textColor="@color/colorPrimary" />
+
+            <Button
+                android:id="@+id/cancelButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:text="取消"
+                android:minWidth="80dp"
+                android:background="@color/colorSurfaceLight"
+                android:textColor="@color/colorTextPrimary" />
+
+            <Button
+                android:id="@+id/saveButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="保存配置"
+                android:minWidth="100dp"
+                android:background="@color/colorPrimary"
+                android:textColor="@android:color/white" />
+        </LinearLayout>
+
+        <!-- 清除缓存按钮 -->
+        <Button
+            android:id="@+id/cacheManagementButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="清除缓存"
+            android:background="@color/colorSurfaceLight"
+            android:textColor="@color/colorPrimary" />
+
+    </LinearLayout>
+
+    <!-- 右侧：状态和音源信息 -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:background="@color/colorSurface"
+        android:elevation="2dp">
+
+        <!-- 状态显示 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="连接状态"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/colorTextPrimary"
+            android:paddingBottom="8dp" />
+
+        <TextView
+            android:id="@+id/statusTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="当前配置: 未设置"
+            android:textSize="14sp"
+            android:textColor="@color/colorTextSecondary"
+            android:background="@color/colorSurfaceLight"
+            android:padding="12dp"
+            android:minHeight="100dp" />
+
+        <!-- 音源列表显示 -->
+        <LinearLayout
+            android:id="@+id/sourcesLayout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginTop="16dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="可用音源"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/colorTextPrimary"
+                android:paddingBottom="8dp" />
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@color/colorSurfaceLight"
+                android:padding="8dp">
+
+                <TextView
+                    android:id="@+id/sourcesTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="暂无音源信息，请先配置服务器地址并测试连接"
+                    android:textSize="14sp"
+                    android:textColor="@color/colorTextSecondary" />
+
+            </ScrollView>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

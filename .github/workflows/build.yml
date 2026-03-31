@@ -1,0 +1,112 @@
+name: Build APK
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up JDK 1.8
+      uses: actions/setup-java@v4
+      with:
+        java-version: '8'
+        distribution: 'temurin'
+
+    - name: Set up Gradle
+      uses: gradle/gradle-build-action@v2
+      with:
+        gradle-version: '4.10.1'
+
+    - name: Download Gradle Wrapper
+      run: |
+        mkdir -p gradle/wrapper
+        curl -L https://github.com/gradle/gradle/raw/v4.10.1/gradle/wrapper/gradle-wrapper.jar \
+          -o gradle/wrapper/gradle-wrapper.jar
+        chmod +x gradlew
+
+    - name: Make gradlew executable
+      run: chmod +x gradlew
+
+    - name: Build Debug APK
+      run: ./gradlew assembleDebug --stacktrace --info 2>&1 | tee build.log
+
+    - name: Check if APK was generated
+      run: |
+        if [ -f app/build/outputs/apk/debug/app-debug.apk ]; then
+          echo "✅ APK generated successfully"
+          ls -lh app/build/outputs/apk/debug/app-debug.apk
+        else
+          echo "❌ APK was NOT generated!"
+          echo "=== ERROR LOG (last 300 lines) ==="
+          tail -300 build.log
+          echo "=== SEARCH FOR ERROR MESSAGES ==="
+          grep -i "error:" build.log || echo "No 'error:' found"
+          grep -i "cannot find symbol" build.log || echo "No 'cannot find symbol' found"
+          exit 1
+        fi
+
+    - name: Build Release APK
+      run: ./gradlew assembleRelease --stacktrace --info 2>&1 | tee build-release.log
+
+    - name: Check if Release APK was generated
+      run: |
+        if [ -f app/build/outputs/apk/release/app-release-unsigned.apk ]; then
+          echo "✅ Release APK generated successfully"
+          ls -lh app/build/outputs/apk/release/app-release-unsigned.apk
+        else
+          echo "❌ Release APK was NOT generated!"
+          echo "=== RELEASE ERROR LOG ==="
+          tail -100 build-release.log
+          exit 1
+        fi
+
+    - name: Upload Build Logs
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: build-logs
+        path: |
+          build.log
+          build-release.log
+
+    - name: Upload Debug APK
+      if: success()
+      uses: actions/upload-artifact@v4
+      with:
+        name: app-debug
+        path: app/build/outputs/apk/debug/app-debug.apk
+
+    - name: Upload Release APK
+      if: success()
+      uses: actions/upload-artifact@v4
+      with:
+        name: app-release-unsigned
+        path: app/build/outputs/apk/release/app-release-unsigned.apk
+
+    - name: Get version from build.gradle
+      id: version
+      run: |
+        VERSION_NAME=$(grep "versionName" app/build.gradle | awk -F '"' '{print $2}')
+        VERSION_CODE=$(grep "versionCode" app/build.gradle | awk -F ' ' '{print $2}')
+        echo "version_name=$VERSION_NAME" >> $GITHUB_OUTPUT
+        echo "version_code=$VERSION_CODE" >> $GITHUB_OUTPUT
+
+    - name: Create Release
+      if: startsWith(github.ref, 'refs/tags/')
+      uses: softprops/action-gh-release@v1
+      with:
+        files: |
+          app/build/outputs/apk/debug/app-debug.apk
+          app/build/outputs/apk/release/app-release-unsigned.apk
+        draft: false
+        prerelease: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
