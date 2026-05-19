@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp"
+        android:background="?android:attr/colorBackground">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ColorOS 磁贴图标测试 v3"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="?attr/colorPrimary"
+            android:layout_marginBottom="12dp" />
+
+        <TextView
+            android:id="@+id/tvInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="13sp"
+            android:lineSpacingMultiplier="1.3"
+            android:textColor="?android:attr/textColorPrimary"
+            android:fontFamily="monospace"
+            android:layout_marginBottom="16dp" />
+
+        <Button
+            android:id="@+id/btnCustomTransparent"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="自定义透图 (文字+大小)"
+            android:layout_marginBottom="8dp" />
+
+        <Button
+            android:id="@+id/btnCustomEmoji"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="自定义 Emoji (表情+大小)"
+            android:layout_marginBottom="8dp" />
+
+        <Button
+            android:id="@+id/btnCustomSystem"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="自定义系统图标"
+            android:layout_marginBottom="8dp" />
+
+        <Button
+            android:id="@+id/btnCustomImage"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="自定义图片 (上传+大小)"
+            android:layout_marginBottom="16dp" />
+
+        <Button
+            android:id="@+id/btnRefresh"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="强制刷新全部 4 个磁贴" />
+    </LinearLayout>
+</ScrollView>
